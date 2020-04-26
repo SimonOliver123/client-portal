@@ -1,0 +1,65 @@
+@import "./variables.scss";
+
+//table definition
+.row {
+  table {
+    margin-top: 48px;
+    
+    thead {
+      tr {
+        th {
+          font-weight: normal;
+          text-align: left;
+        }
+      }
+    }
+
+    tbody {
+      td {
+        color: $text-dark-grey;
+
+        button.btn {
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+      }
+
+      tr.children-row {
+        td {
+          font-weight: normal;
+          text-align: left;
+
+          &:first-child {
+            padding-left: 56px;
+          }
+        }
+      }
+      tr:not(.children-row) {
+        background-color: ivory;
+
+        td:last-child {
+          cursor: pointer;
+
+          i {
+            margin-right: 3px;
+            float: right;
+            border: solid black;
+            border-width: 0 1px 1px 0;
+            padding: 6px;
+          }
+          .up {
+            margin-top: 6px;
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+          }
+          .down {
+            margin-top: -3px;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+          }
+        }
+      }
+
+    }
+  }
+}

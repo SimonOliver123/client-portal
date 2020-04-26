@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Client</th>
+          <th scope="col">Country/Region</th>
+          <th scope="col">Channel</th>
+          <th scope="col">Software</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let uc of userClients; trackBy: trackByFn; let index=index; let opened=false">
+          <tr>
+            <td>{{ uc.clientName }}</td>
+            <td>{{ uc.countryRegion.name }}</td>
+            <td>{{ Channel[uc.channel] }}</td>
+            <td>{{ getNameAndVersion(uc.software) }}</td>
+            <td>
+              <button type="button" class="btn btn-outline-dark" (click)="doCheckClientForUpdate(uc)">Check</button>
+            </td>
+            <td (click)="opened=!opened">
+              <i *ngIf="uc.clientUpdates && uc.clientUpdates.length" class="arrow" [ngClass]="opened ? 'down' : 'up'"></i>
+            </td>
+          </tr>
+          <tr class="children-row" *ngFor="let update of uc.clientUpdates; trackBy: trackByFn" [hidden]="opened">
+            <td colspan="2">{{ getNameAndVersion(update.package) }}</td>
+            <td colspan="2">{{ getUpdateInfo(update) }} on {{ update.date | date:'dd.MM.yyyy'}}</td>
+            <td>
+              <button *ngIf="update.checkStatus && !update.downloadStatus" 
+                type="button" class="btn btn-outline-dark" 
+                (click)="doUpdatePackageUpdate(update, true, false)">Download</button>
+              <button *ngIf="update.checkStatus && update.downloadStatus && !update.installedStatus" 
+                type="button" class="btn btn-outline-dark"
+                (click)="doUpdatePackageUpdate(update, true, true)">Install</button>
+            </td>
+            <td></td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

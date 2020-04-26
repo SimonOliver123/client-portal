@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Software</th>
+          <th scope="col">Version</th>
+          <th scope="col">Release date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let softw of software; trackBy: trackByFn; let index=index; let opened=false">
+          <tr>
+            <td>{{ softw.name }}</td>
+            <td>{{ getVersion(softw) }}</td>
+            <td></td>
+            <td (click)="opened=!opened">
+              <i *ngIf="softw.packageUpdates && softw.packageUpdates.length" class="arrow" [ngClass]="opened ? 'up' : 'down'"></i>
+            </td>
+          </tr>
+          <tr class="children-row" *ngFor="let packageUpdate of softw.packageUpdates; trackBy: trackByFn" [hidden]="!opened">
+            <td>{{ packageUpdate.package.name }}</td>
+            <td>{{ getVersion(packageUpdate.package) }}</td>
+            <td>{{ packageUpdate.releaseDate | date:'dd.MM.yyyy'}}</td>
+            <td></td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
